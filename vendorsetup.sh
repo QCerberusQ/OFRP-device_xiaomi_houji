@@ -61,7 +61,7 @@ if [ "$1" = "$FDEVICE" -o "$FOX_BUILD_DEVICE" = "$FDEVICE" ]; then
 	# -----------------------------------------------------------------------
 	# Build identity
 	# -----------------------------------------------------------------------
-	export FOX_BUILD_TYPE="Beta"
+	export FOX_BUILD_TYPE="Stable"
 	export TARGET_DEVICE_ALT="houjiin"
 	export FOX_TARGET_DEVICES="houji,houjiin"
 
