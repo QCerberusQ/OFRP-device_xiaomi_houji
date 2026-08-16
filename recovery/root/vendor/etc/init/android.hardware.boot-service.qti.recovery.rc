@@ -1,0 +1,10 @@
+# Copyright (c) 2023 Qualcomm Innovation Center, Inc. All rights reserved.
+# SPDX-License-Identifier: BSD-3-Clause-Clear
+
+service vendor.boot-qti /vendor/bin/hw/android.hardware.boot-service.qti.recovery
+    class early_hal
+    user root
+    group root
+    seclabel u:r:recovery:s0
+    setenv LD_LIBRARY_PATH /system/lib64:/vendor/lib64
+    interface aidl android.hardware.boot.IBootControl/default

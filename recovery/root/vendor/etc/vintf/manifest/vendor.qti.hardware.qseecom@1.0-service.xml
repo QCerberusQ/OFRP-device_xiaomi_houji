@@ -1,0 +1,14 @@
+<manifest version="1.0" type="device">
+<!---/*************************************************************************
+* Copyright (c) 2023 Qualcomm Technologies, Inc.
+* All Rights Reserved.
+* Confidential and Proprietary - Qualcomm Technologies, Inc.
+****************************************************************************-->
+   <hal format="aidl">
+       <name>vendor.qti.hardware.qseecom</name>
+       <interface>
+           <name>IQSEECom</name>
+           <instance>default</instance>
+       </interface>
+   </hal>
+</manifest>

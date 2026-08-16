@@ -1,0 +1,47 @@
+# Android fstab file.
+# The filesystem that contains the filesystem checker binary (typically /system) cannot
+# specify MF_CHECK, and must come before any filesystems that do specify MF_CHECK
+
+# mount point          fstype  device                                        device2              flags
+
+# Userdata/Metadata partitions
+/metadata              f2fs    /dev/block/bootdevice/by-name/metadata                             flags=display="Metadata";wrappedkey
+
+# Other partitions
+/cache                 ext4    /dev/block/bootdevice/by-name/rescue                               flags=display="Cache";formattable;wipeduringfactoryreset
+/misc                  emmc    /dev/block/bootdevice/by-name/misc
+
+# Boot
+/boot                  emmc    /dev/block/bootdevice/by-name/boot                                 flags=display="Boot";backup=1;slotselect;flashimg=1
+/init_boot             emmc    /dev/block/bootdevice/by-name/init_boot                            flags=display="Init Boot";backup=1;slotselect;flashimg=1
+/vendor_boot           emmc    /dev/block/bootdevice/by-name/vendor_boot                          flags=display="Vendor Boot";backup=1;slotselect;flashimg=1
+/dtbo                  emmc    /dev/block/bootdevice/by-name/dtbo                                 flags=display="DTBO";backup=1;slotselect;flashimg=1
+/recovery              emmc    /dev/block/bootdevice/by-name/recovery                             flags=display="Recovery";backup=1;slotselect;flashimg=1
+
+# AVB partitions
+/vbmeta                emmc    /dev/block/bootdevice/by-name/vbmeta                               flags=display="VBMeta";backup=1;slotselect
+/vbmeta_system         emmc    /dev/block/bootdevice/by-name/vbmeta_system                        flags=display="VBMeta System";backup=1;slotselect
+
+# Persistent Firmware & Properties
+/persist               ext4    /dev/block/bootdevice/by-name/persist                              flags=display="Persist"
+/persist_image         emmc    /dev/block/bootdevice/by-name/persist                              flags=display="Persist";backup=1
+
+# Modem/Firmware partitions
+/modem                 vfat    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";slotselect;fsflags="ro,shortname=lower,uid=1000,gid=1000,dmask=227,fmask=337,context=u:object_r:firmware_file:s0 wait"
+/modem_img             emmc    /dev/block/bootdevice/by-name/modem                                flags=display="Modem";backup=1;slotselect
+
+/bluetooth             vfat    /dev/block/bootdevice/by-name/bluetooth                            flags=display="Bluetooth";slotselect;fsflags="ro,shortname=lower,uid=1002,gid=3002,dmask=227,fmask=337,context=u:object_r:bt_firmware_file:s0 wait"
+/bluetooth_image       emmc    /dev/block/bootdevice/by-name/bluetooth                            flags=display="Bluetooth";backup=1;slotselect;subpartitionof=/modem_img
+
+/dsp                   vfat    /dev/block/bootdevice/by-name/dsp                                  flags=display="DSP";slotselect
+/dsp_image             emmc    /dev/block/bootdevice/by-name/dsp                                  flags=display="DSP";backup=1;slotselect;subpartitionof=/modem_img
+
+# EFS/IMEI partitions
+/efs1                  emmc    /dev/block/bootdevice/by-name/modemst1                             flags=display="EFS (IMEI)";backup=1
+/efs2                  emmc    /dev/block/bootdevice/by-name/modemst2                             flags=backup=1;subpartitionof=/efs1
+/efsc                  emmc    /dev/block/bootdevice/by-name/fsc                                  flags=backup=1;subpartitionof=/efs1
+/efsg                  emmc    /dev/block/bootdevice/by-name/fsg                                  flags=backup=1;subpartitionof=/efs1
+
+# Removable storage
+/storage               auto    /data/media/0                                                      flags=display="Internal Storage";backup=1;usermrf;fsflags="bind,utf8";removable
+/usb_otg               auto    /dev/block/sdg1                            /dev/block/sdg4         flags=display="USB-Storage";storage;wipeingui;fsflags=utf8;removable

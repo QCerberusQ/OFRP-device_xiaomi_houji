@@ -1,0 +1,7 @@
+service vendor.health-recovery /vendor/bin/hw/android.hardware.health-service.qti_recovery
+    class hal
+    seclabel u:r:recovery:s0
+    user root
+    group root
+    capabilities WAKE_ALARM BLOCK_SUSPEND
+    file /dev/kmsg w
